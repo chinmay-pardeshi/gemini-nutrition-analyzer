@@ -4,24 +4,32 @@ This is an AI-powered health management app built using **Google Gemini Vision**
 
 ---
 
+## 📽️ Demo
+
+![Gemini Health Demo](demo/demo.gif)
+
+> *Watch the app in action! Upload food images and instantly get nutritional insights.*
+
+---
+
 ## 🚀 Features
 
-- 📷 Upload food images
-- 🧠 Powered by **Gemini Pro Vision**
-- 🍽️ Get per-item calorie count
-- ✅ Classifies meals as healthy/unhealthy
-- 🧪 Shows macro and micronutrient breakdown
-- 💡 Custom input prompt support
+- 📷 Upload food images  
+- 🧠 Powered by **Gemini Pro Vision**  
+- 🍽️ Get per-item calorie count  
+- ✅ Classifies meals as healthy/unhealthy  
+- 🧪 Shows macro and micronutrient breakdown  
+- 💡 Custom input prompt support  
 
 ---
 
 ## 🛠️ Tech Stack
 
-- Python
-- Streamlit
-- Google Generative AI (Gemini API)
-- Pillow (PIL)
-- dotenv
+- Python  
+- Streamlit  
+- Google Generative AI (Gemini API)  
+- Pillow (PIL)  
+- dotenv  
 
 ---
 
@@ -36,7 +44,7 @@ cd gemini-health-app
 pip install -r requirements.txt
 
 # 3. Add your API key
-Create a `.env` file with:
+# Create a .env file with:
 GOOGLE_API_KEY=your_api_key
 
 # 4. Run the app
