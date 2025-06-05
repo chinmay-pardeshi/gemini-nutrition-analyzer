@@ -6,7 +6,7 @@ This is an AI-powered health management app built using **Google Gemini Vision**
 
 ## 📽️ Demo
 
-![Gemini Health Demo](demo/demo.gif)
+![Gemini Health Demo](demo/nutration_analysis_gif.gif)
 
 > *Watch the app in action! Upload food images and instantly get nutritional insights.*
 
