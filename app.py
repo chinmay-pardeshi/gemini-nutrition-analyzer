@@ -36,10 +36,10 @@ def load_custom_css():
     .app-header {
         text-align: center;
         padding: 2rem 0;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
     
     .app-title {
@@ -47,13 +47,17 @@ def load_custom_css():
         font-weight: 700;
         margin-bottom: 0.5rem;
         line-height: 1.2;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
     
     .app-subtitle {
         font-size: 1.2rem;
-        color: #666;
+        color: #333;
         font-weight: 400;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
     }
     
     /* Feature Cards */
@@ -71,6 +75,17 @@ def load_custom_css():
         transform: translateY(-5px);
     }
     
+    .feature-card h3 {
+        color: #333;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+    
+    .feature-card p {
+        color: #666;
+        margin: 0;
+    }
+    
     /* Upload Section */
     .upload-section {
         background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
@@ -79,6 +94,16 @@ def load_custom_css():
         text-align: center;
         margin: 2rem 0;
         color: white;
+        box-shadow: 0 15px 35px rgba(240, 147, 251, 0.3);
+    }
+    
+    .upload-section h3 {
+        color: white;
+        margin-bottom: 1rem;
+    }
+    
+    .upload-section p {
+        color: rgba(255, 255, 255, 0.9);
     }
     
     /* Stats Cards */
@@ -100,7 +125,7 @@ def load_custom_css():
     
     .stat-label {
         font-size: 1rem;
-        color: #666;
+        color: #333;
         font-weight: 500;
     }
     
@@ -207,8 +232,42 @@ def load_custom_css():
     .footer {
         text-align: center;
         padding: 2rem;
-        color: #666;
+        color: #333;
         margin-top: 3rem;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+    }
+    
+    .footer a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    
+    .footer a:hover {
+        color: #764ba2;
+        text-decoration: underline;
+    }
+    
+    /* Additional text color fixes */
+    .stMarkdown, .stText {
+        color: #333;
+    }
+    
+    .stSubheader {
+        color: #333 !important;
+    }
+    
+    /* Ensure all Streamlit text is visible */
+    .element-container .stMarkdown h1,
+    .element-container .stMarkdown h2, 
+    .element-container .stMarkdown h3,
+    .element-container .stMarkdown h4,
+    .element-container .stMarkdown h5,
+    .element-container .stMarkdown h6,
+    .element-container .stMarkdown p {
+        color: #333 !important;
     }
     </style>
     """, unsafe_allow_html=True)
