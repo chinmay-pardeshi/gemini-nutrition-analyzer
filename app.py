@@ -1,56 +1,8 @@
-# this is for readme file 
-# Function to load Google Gemini Pro Vision API And get response
-# bakend function to get the response from the google gemini pro vision API
-# models/gemini-1.0-pro-vision-latest
-# models/gemini-pro-vision
-# models/gemini-1.5-pro-latest
-# models/gemini-1.5-pro-001
-# models/gemini-1.5-pro-002
-# models/gemini-1.5-pro
-# models/gemini-1.5-flash-latest
-# models/gemini-1.5-flash-001
-# models/gemini-1.5-flash-001-tuning
-# models/gemini-1.5-flash
-# models/gemini-1.5-flash-002
-# models/gemini-1.5-flash-8b
-# models/gemini-1.5-flash-8b-001
-# models/gemini-1.5-flash-8b-latest
-# models/gemini-1.5-flash-8b-exp-0827
-# models/gemini-1.5-flash-8b-exp-0924
-# models/gemini-2.5-pro-exp-03-25
-# models/gemini-2.5-pro-preview-03-25
-# models/gemini-2.5-flash-preview-04-17
-# models/gemini-2.5-flash-preview-04-17-thinking
-# models/gemini-2.5-pro-preview-05-06
-# models/gemini-2.0-flash-exp
-# models/gemini-2.0-flash
-# models/gemini-2.0-flash-001
-# models/gemini-2.0-flash-exp-image-generation
-# models/gemini-2.0-flash-lite-001
-# models/gemini-2.0-flash-lite
-# models/gemini-2.0-flash-preview-image-generation
-# models/gemini-2.0-flash-lite-preview-02-05
-# models/gemini-2.0-flash-lite-preview
-# models/gemini-2.0-pro-exp
-# models/gemini-2.0-pro-exp-02-05
-# models/gemini-exp-1206
-# models/gemini-2.0-flash-thinking-exp-01-21
-# models/gemini-2.0-flash-thinking-exp
-# models/gemini-2.0-flash-thinking-exp-1219
-# models/learnlm-1.5-pro-experimental
-# models/learnlm-2.0-flash-experimental
-# models/gemma-3-1b-it
-# models/gemma-3-4b-it
-# models/gemma-3-12b-it
-# models/gemma-3-27b-it
 import streamlit as st
 import os
 from PIL import Image
 from dotenv import load_dotenv
 import google.generativeai as genai
-import plotly.express as px
-import plotly.graph_objects as go
-import pandas as pd
 import re
 from datetime import datetime
 
@@ -196,6 +148,40 @@ def load_custom_css():
         justify-content: space-between;
         margin-bottom: 0.5rem;
         font-weight: 500;
+        color: #333;
+    }
+    
+    .progress-bar-container {
+        width: 100%;
+        height: 12px;
+        background: #f0f0f0;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .progress-bar {
+        height: 100%;
+        border-radius: 6px;
+        transition: width 0.5s ease;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        position: relative;
+    }
+    
+    .progress-bar::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
     }
     
     /* Health Badge */
@@ -271,40 +257,35 @@ def parse_nutrition_data(response_text):
     
     return nutrition_data
 
-# Create nutrition visualization
-def create_nutrition_chart(nutrition_data):
+# Create nutrition progress bars
+def create_nutrition_bars(nutrition_data):
     if not nutrition_data:
         return None
     
-    # Create a donut chart
-    fig = go.Figure(data=[go.Pie(
-        labels=list(nutrition_data.keys()),
-        values=list(nutrition_data.values()),
-        hole=0.4,
-        marker_colors=['#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe']
-    )])
+    colors = {
+        'Carbs': '#667eea',
+        'Protein': '#764ba2', 
+        'Fat': '#f093fb',
+        'Fiber': '#4facfe',
+        'Sugar': '#f5576c'
+    }
     
-    fig.update_traces(
-        textposition='inside',
-        textinfo='percent+label',
-        textfont_size=12,
-        marker=dict(line=dict(color='white', width=2))
-    )
+    bars_html = ""
+    for nutrient, value in nutrition_data.items():
+        color = colors.get(nutrient, '#667eea')
+        bars_html += f"""
+        <div class="progress-container">
+            <div class="progress-label">
+                <span>{nutrient}</span>
+                <span>{value}%</span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: {value}%; background: {color};"></div>
+            </div>
+        </div>
+        """
     
-    fig.update_layout(
-        title={
-            'text': 'Nutritional Breakdown',
-            'x': 0.5,
-            'font': {'size': 20, 'family': 'Inter'}
-        },
-        showlegend=False,
-        height=400,
-        margin=dict(t=50, b=50, l=50, r=50),
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)'
-    )
-    
-    return fig
+    return bars_html
 
 # Streamlit page config
 st.set_page_config(
@@ -438,12 +419,15 @@ if analyze_button and uploaded_file:
                 
                 with tab2:
                     if nutrition_data:
-                        fig = create_nutrition_chart(nutrition_data)
-                        if fig:
-                            st.plotly_chart(fig, use_container_width=True)
+                        st.markdown("### 📊 Nutritional Breakdown")
+                        
+                        # Create nutrition progress bars
+                        bars_html = create_nutrition_bars(nutrition_data)
+                        if bars_html:
+                            st.markdown(bars_html, unsafe_allow_html=True)
                         
                         # Create nutrition grid
-                        st.markdown("### Nutritional Breakdown")
+                        st.markdown("### 📈 Nutrition Statistics")
                         cols = st.columns(len(nutrition_data) if nutrition_data else 3)
                         for i, (nutrient, value) in enumerate(nutrition_data.items()):
                             with cols[i]:
@@ -519,5 +503,3 @@ with st.sidebar:
     - **UI/UX Design**: Modern, responsive interface
     - **Computer Vision**: Image processing & analysis
     """)
-
-
