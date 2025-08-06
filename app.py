@@ -530,8 +530,8 @@ st.markdown('</div>', unsafe_allow_html=True)
 st.markdown("""
 <div class="footer">
     <p>Built with ❤️ using Streamlit & Google Gemini AI | 
-    <a href="https://github.com" target="_blank">View on GitHub</a> | 
-    <a href="https://linkedin.com" target="_blank">Connect on LinkedIn</a></p>
+    <a href="https://github.com/chinmay-pardeshi" target="_blank">View on GitHub</a> | 
+    <a href="https://www.linkedin.com/in/chinmay-pardeshi/" target="_blank">Connect on LinkedIn</a></p>
     <p><small>© 2025 AI Nutrition Analyzer. Designed for educational purposes.</small></p>
 </div>
 """, unsafe_allow_html=True)
@@ -562,3 +562,4 @@ with st.sidebar:
     - **UI/UX Design**: Modern, responsive interface
     - **Computer Vision**: Image processing & analysis
     """)
+
